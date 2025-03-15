@@ -24,12 +24,18 @@
             android:layout_weight="1" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/spinStu"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
         <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/spinFocus"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
@@ -40,12 +46,6 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/spinFocus"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="6" />
 
             <TextView
                 android:layout_width="0dp"
