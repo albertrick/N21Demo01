@@ -18,12 +18,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void studentInput(View view) {
-        Intent t = new Intent(this,StudentInAct.class);
+        Intent t = new Intent(this, StudentInAct.class);
         startActivity(t);
     }
 
     public void studentDisplay(View view) {
-        Intent t = new Intent(this,StudentDisAct.class);
+        Intent t = new Intent(this, StudentDisAct.class);
+        startActivity(t);
+    }
+
+    public void gradeInput(View view) {
+        Intent t = new Intent(this, GradeInAct.class);
         startActivity(t);
     }
 }

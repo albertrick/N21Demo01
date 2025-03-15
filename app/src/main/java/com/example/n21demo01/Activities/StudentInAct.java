@@ -15,11 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.n21demo01.Obj.Student;
 import com.example.n21demo01.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 public class StudentInAct extends AppCompatActivity {
 
