@@ -31,4 +31,9 @@ public class MainActivity extends AppCompatActivity {
         Intent t = new Intent(this, GradeInAct.class);
         startActivity(t);
     }
+
+    public void gradeDisplay(View view) {
+        Intent t = new Intent(this, GradesDisAct.class);
+        startActivity(t);
+    }
 }
