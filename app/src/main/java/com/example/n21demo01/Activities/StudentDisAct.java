@@ -34,9 +34,8 @@ import java.util.ConcurrentModificationException;
 
 public class StudentDisAct extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private String str1, str2,strtmp;
     private ListView lV;
-    private Student stuTmp;
+    private String strtmp;
     private ArrayList<String> stuList = new ArrayList<String>();
     private ArrayList<Student> stuValues = new ArrayList<Student>();
     private ArrayAdapter<String> adp;
@@ -72,10 +71,10 @@ public class StudentDisAct extends AppCompatActivity implements AdapterView.OnIt
                 stuList.clear();
                 stuValues.clear();
                 for(DataSnapshot data : dS.getChildren()) {
-                    str1 = (String) data.getKey();
+                    String str1 = (String) data.getKey();
                     Student stuTmp = data.getValue(Student.class);
                     stuValues.add(stuTmp);
-                    str2 = stuTmp.getStuName();
+                    String str2 = stuTmp.getStuName();
                     stuList.add(str1+": "+str2);
                 }
                 adp.notifyDataSetChanged();

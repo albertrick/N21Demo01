@@ -2,7 +2,7 @@ package com.example.n21demo01.Obj;
 
 public class StuGrade {
 
-    private String stuID, classSubject, gradeType;
+    private String stuID, classSubject, gradeType, gradeID;
     private int finalGrade;
 
     public StuGrade() {
@@ -45,5 +45,13 @@ public class StuGrade {
 
     public void setFinalGrade(int finalGrade) {
         this.finalGrade = finalGrade;
+    }
+
+    public String getGradeID() {
+        return gradeID;
+    }
+
+    public void setGradeID(String gradeID) {
+        this.gradeID = gradeID;
     }
 }
