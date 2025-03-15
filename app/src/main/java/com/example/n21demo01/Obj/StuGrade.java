@@ -2,14 +2,15 @@ package com.example.n21demo01.Obj;
 
 public class StuGrade {
 
-    private String stuID, classSubject, gradeType, gradeID;
+    private String stuID, stuName, classSubject, gradeType, gradeID;
     private int finalGrade;
 
     public StuGrade() {
     }
 
-    public StuGrade(String stuID, String classSubject, String gradeType, int finalGrade) {
+    public StuGrade(String stuID, String stuName, String classSubject, String gradeType, int finalGrade) {
         this.stuID = stuID;
+        this.stuName = stuName;
         this.classSubject = classSubject;
         this.gradeType = gradeType;
         this.finalGrade = finalGrade;
@@ -21,6 +22,14 @@ public class StuGrade {
 
     public void setStuID(String stuID) {
         this.stuID = stuID;
+    }
+
+    public String getStuName() {
+        return stuName;
+    }
+
+    public void setStuName(String stuName) {
+        this.stuName = stuName;
     }
 
     public String getClassSubject() {

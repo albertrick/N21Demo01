@@ -8,6 +8,6 @@ public class FBRef {
 
     public static DatabaseReference refStudents = FBDB.getReference("Students");
     public static DatabaseReference refStuGrades = FBDB.getReference("StuGrades");
-    public static DatabaseReference refFlags = FBDB.getReference("Flags");
+//    public static DatabaseReference refFlags = FBDB.getReference("Flags");
 
 }
