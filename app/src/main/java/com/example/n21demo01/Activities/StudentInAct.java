@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.n21demo01.Obj.Student;
 import com.example.n21demo01.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -21,38 +24,45 @@ import com.google.firebase.database.ValueEventListener;
 public class StudentInAct extends AppCompatActivity {
 
     private EditText eTGradeClass, eTStuClass, eTStuName, eTStuID;
-    public Boolean dataed;
+    private Boolean editData;
+    private Student tmpStu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_in);
 
-        eTGradeClass = (EditText) findViewById(R.id.eTGradeClass);
-        eTStuClass = (EditText) findViewById(R.id.eTStuClass);
-        eTStuName = (EditText) findViewById(R.id.eTStuName);
-        eTStuID = (EditText) findViewById(R.id.eTStuID);
+        eTGradeClass = findViewById(R.id.eTGradeClass);
+        eTStuClass = findViewById(R.id.eTStuClass);
+        eTStuName = findViewById(R.id.eTStuName);
+        eTStuID = findViewById(R.id.eTStuID);
 
-//        dataed = false;
-//
-//        refFlags.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dS) {
-//                dataed = (Boolean) dS.child("Dataedit").getValue();
-//                if (dataed) {
-//                    Intent gi=getIntent();
-//                    eTGradeClass.setText(gi.getStringExtra("stuGradeclass"));
-//                    eTStuClass.setText(gi.getStringExtra("stuClass"));
-//                    eTStuName.setText(gi.getStringExtra("stuName"));
-//                    oldStuId=gi.getStringExtra("stuID");
-//                    eTStuID.setText(oldStuId);
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError dbError) {
-//                Log.e("StudentinAct/onCreate", "Error reading data: "+dbError);
-//            }
-//        });
+        Intent gi = getIntent();
+        editData = gi.getBooleanExtra("edit", false);
+        if (editData) {
+            String stuID = gi.getStringExtra("stuID");
+            refStudents.child(stuID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DataSnapshot dS = task.getResult();
+                        if (dS != null) {
+                            tmpStu = dS.getValue(Student.class);
+                            eTGradeClass.setText(String.valueOf(tmpStu.getGradeClass()));
+                            eTStuClass.setText(String.valueOf(tmpStu.getStuClass()));
+                            eTStuName.setText(tmpStu.getStuName());
+                            eTStuID.setText(tmpStu.getStuID());
+                        } else {
+                            Log.e("StudentInAct/onCreate", "Data snapshot in edit is null");
+                        }
+                    }
+                    else {
+                        Log.e("StudentInAct/onCreate", "Error getting data in edit", task.getException());
+                    }
+                }
+            });
+        }
+
     }
 
     public void stuInsert(View view) {
@@ -63,34 +73,16 @@ public class StudentInAct extends AppCompatActivity {
         if (strGradeClass.isEmpty() || strStuClass.isEmpty() || stuName.isEmpty() || stuID.isEmpty()) {
             Toast.makeText(this, "Please fill all the fields !", Toast.LENGTH_LONG).show();
         } else {
+            if (editData) {
+                if (!stuID.equals(tmpStu.getStuID())) {
+                    refStudents.child(tmpStu.getStuID()).removeValue();
+                }
+            }
             int gradeClass = Integer.parseInt(strGradeClass);
             int stuClass = Integer.parseInt(strStuClass);
-            Student student = new Student(gradeClass, stuClass, stuName, stuID);
-            refStudents.child(student.getStuID()).setValue(student);
+            tmpStu = new Student(gradeClass, stuClass, stuName, stuID);
+            refStudents.child(tmpStu.getStuID()).setValue(tmpStu);
             finish();
         }
-//        refFlags.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dS) {
-//                dataed = (Boolean) dS.child("Dataedit").getValue();
-//                if (dataed) {
-//                    refStudents.child(oldStuId).removeValue();
-//                    refFlags.child("Dataedit").setValue(false);
-//                }
-//                str=eTGradeClass.getText().toString();
-//                GradeClass=Integer.parseInt(str);
-//                str=eTStuClass.getText().toString();
-//                StuClass=Integer.parseInt(str);
-//                StuName=eTStuName.getText().toString();
-//                StuID=eTStuID.getText().toString();
-//                student=new Student(GradeClass,StuClass,StuName,StuID);
-//                refStudents.child(StuID).setValue(student);
-//                finish();
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError dbError) {
-//                Log.e("StudentinAct/stuInsert", "Error reading data: "+dbError);
-//            }
-//        });
     }
 }
